@@ -34,3 +34,8 @@
 
    Ao acessar o sistema, nosso usuário Juninho pode fazer uma busca de 
    usuários pelo ID.
+   
+4 - Deletar um usuário peloID
+
+   No sistema, Juninho pode deletar um usuário informando o ID de quem 
+   ele quer excluir.
