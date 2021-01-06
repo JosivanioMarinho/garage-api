@@ -39,5 +39,9 @@ public class UserController {
         return userService.findUserByID(id);
     }
 
-
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUserByID(@PathVariable Long id) throws UserNotFoudException {
+        userService.deleteUserBYID(id);
+    }
 }

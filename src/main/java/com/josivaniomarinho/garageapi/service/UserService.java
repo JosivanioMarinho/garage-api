@@ -50,8 +50,16 @@ public class UserService {
         return userMapper.toDTO(user);
     }
 
+    //Delete user by id
+    public void deleteUserBYID(Long id) throws UserNotFoudException {
+       verifyIfExists(id);
+
+        userRepository.deleteById(id);
+    }
+
     private User verifyIfExists(Long id) throws UserNotFoudException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoudException(id));
     }
+
 }
