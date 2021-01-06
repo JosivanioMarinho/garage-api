@@ -2,11 +2,13 @@ package com.josivaniomarinho.garageapi.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,9 +19,9 @@ public class Car {
     private Long id;
 
     @Column(nullable = false)
-    private int year;
+    private Integer year;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String licensePlate;
 
     @Column(nullable = false)
