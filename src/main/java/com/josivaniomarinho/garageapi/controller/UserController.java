@@ -27,5 +27,9 @@ public class UserController {
     public MessageResponseDTO createdUser(@RequestBody @Valid UserDTO userDTO){
         return userService.createUser(userDTO);
     }
-    
+
+    @GetMapping
+    public List<UserDTO> listAll(){
+        return userService.listAll();
+    }
 }
