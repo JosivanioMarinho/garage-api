@@ -7,20 +7,20 @@
     mas para isso, ele deve fazer um cadastro no sistema. Com isso 
     em mente, ele deve informar os seguintes dados: 
     
-   *Nome
-   *E-mail
-   *Data de nascimento
-   *Login
-   *Senha
-   *Telefone
-   *Dados do veículo
+   * Nome
+   * E-mail
+   * Data de nascimento
+   * Login
+   * Senha
+   * Telefone
+   * Dados do veículo
    
    Os dados referentes para seu veículo são:
    
-   *Ano
-   *Placa
-   *Modelo
-   *Cor
+   * Ano
+   * Placa
+   * Modelo
+   * Cor
    
    Após informar essas informações corretamente, Juninho terá uma conta
    acessível em nosso sistema.
