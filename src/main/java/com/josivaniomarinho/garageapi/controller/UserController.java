@@ -2,6 +2,7 @@ package com.josivaniomarinho.garageapi.controller;
 
 import com.josivaniomarinho.garageapi.dto.request.UserDTO;
 import com.josivaniomarinho.garageapi.dto.response.MessageResponseDTO;
+import com.josivaniomarinho.garageapi.exception.UserNotFoudException;
 import com.josivaniomarinho.garageapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,4 +33,11 @@ public class UserController {
     public List<UserDTO> listAll(){
         return userService.listAll();
     }
+
+    @GetMapping("/{id}")
+    public UserDTO findUserByID(@PathVariable Long id) throws UserNotFoudException {
+        return userService.findUserByID(id);
+    }
+
+
 }
