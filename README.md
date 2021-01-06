@@ -29,3 +29,8 @@
 2 - Listar todos os usuários
 
    O usuário pode ter uma listagem de todos os usuários cadastrados.
+   
+2 - Busca de um usuário pelo ID
+
+   Ao acessar o sistema, nosso usuário Juninho pode fazer uma nusca de 
+   usuários pelo ID.
