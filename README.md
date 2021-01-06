@@ -32,5 +32,5 @@
    
 2 - Busca de um usuário pelo ID
 
-   Ao acessar o sistema, nosso usuário Juninho pode fazer uma nusca de 
+   Ao acessar o sistema, nosso usuário Juninho pode fazer uma busca de 
    usuários pelo ID.
