@@ -29,10 +29,7 @@ public class UserService {
         User userToSave = userMapper.toModel(userDTO);
 
         User savedUser = userRepository.save(userToSave);
-        return MessageResponseDTO
-                .builder()
-                .message("User created with ID " + savedUser.getId())
-                .build();
+        return createMessageResponse("User created with ID ", savedUser.getId());
     }
 
     //List all users
@@ -57,9 +54,26 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    //Update user by id
+    public MessageResponseDTO updateUserByID(Long id, UserDTO userDTO) throws UserNotFoudException {
+        verifyIfExists(id);
+
+        User userToUpdate = userMapper.toModel(userDTO);
+
+        User userUpdated = userRepository.save(userToUpdate);
+        return createMessageResponse("User updated with ID ", userUpdated.getId());
+    }
+
     private User verifyIfExists(Long id) throws UserNotFoudException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoudException(id));
+    }
+
+    private MessageResponseDTO createMessageResponse(String s, Long id){
+        return MessageResponseDTO
+                .builder()
+                .message(s + id)
+                .build();
     }
 
 }

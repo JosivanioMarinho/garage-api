@@ -39,6 +39,11 @@ public class UserController {
         return userService.findUserByID(id);
     }
 
+    @PutMapping("/{id}")
+    public MessageResponseDTO updateUserBYID(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO) throws UserNotFoudException {
+        return userService.updateUserByID(id, userDTO);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserByID(@PathVariable Long id) throws UserNotFoudException {
