@@ -39,3 +39,10 @@
 
    No sistema, Juninho pode deletar um usuário informando o ID de quem 
    ele quer excluir.
+ 
+5 - Atualizar um usuário ID
+
+   Digamos que Juninho durante a criação de sua conta no sistema, tenha digitado 
+   alguma informação errada sem perseber, é bem provavel que ele queira consertar
+   o erro. Para isso ele pode atualizar os dados com de acordo com seu ID.
+
