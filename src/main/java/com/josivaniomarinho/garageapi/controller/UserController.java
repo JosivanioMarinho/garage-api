@@ -2,7 +2,7 @@ package com.josivaniomarinho.garageapi.controller;
 
 import com.josivaniomarinho.garageapi.dto.request.UserDTO;
 import com.josivaniomarinho.garageapi.dto.response.MessageResponseDTO;
-import com.josivaniomarinho.garageapi.exception.UserNotFoudException;
+import com.josivaniomarinho.garageapi.exception.UserNotFoundException;
 import com.josivaniomarinho.garageapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,18 +35,18 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDTO findUserByID(@PathVariable Long id) throws UserNotFoudException {
+    public UserDTO findUserByID(@PathVariable Long id) throws UserNotFoundException {
         return userService.findUserByID(id);
     }
 
     @PutMapping("/{id}")
-    public MessageResponseDTO updateUserBYID(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO) throws UserNotFoudException {
+    public MessageResponseDTO updateUserBYID(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO) throws UserNotFoundException {
         return userService.updateUserByID(id, userDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUserByID(@PathVariable Long id) throws UserNotFoudException {
+    public void deleteUserByID(@PathVariable Long id) throws UserNotFoundException {
         userService.deleteUserBYID(id);
     }
 }

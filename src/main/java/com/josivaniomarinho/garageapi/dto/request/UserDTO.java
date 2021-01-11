@@ -19,29 +19,29 @@ public class UserDTO {
 
     private Long id;
 
-    @NotEmpty(message = "{firstName.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     @Size(min = 2, max = 100)
     private String firstName;
 
-    @NotEmpty(message = "{lastName.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     @Size(min = 2, max = 100)
     private String lastName;
 
-    @NotEmpty(message = "{email.not.empty}")
-    @Email(message = "{email.valid.email}")
+    @NotEmpty(message = "{missing.fields}")
+    @Email(message = "{invalid.fields}")
     private String email;
 
-    @NotEmpty(message = "{birthday.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     private String birthday;
 
-    @NotEmpty(message = "{login.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     private String login;
 
-    @NotEmpty(message = "{password.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     @Size(min = 6)
     private String password;
 
-    @NotEmpty(message = "{phone.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     @Size(min = 9, max = 12)
     private String phone;
 
