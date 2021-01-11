@@ -4,7 +4,7 @@ import com.josivaniomarinho.garageapi.dto.request.UserDTO;
 import com.josivaniomarinho.garageapi.dto.response.MessageResponseDTO;
 import com.josivaniomarinho.garageapi.entity.User;
 import com.josivaniomarinho.garageapi.exception.UserExistsEmailAndLoginException;
-import com.josivaniomarinho.garageapi.exception.UserNotFoundException;
+import com.josivaniomarinho.garageapi.exception.NotFoundException;
 import com.josivaniomarinho.garageapi.mapper.UserMapper;
 import com.josivaniomarinho.garageapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,21 +44,21 @@ public class UserService {
     }
 
     //Find user by id
-    public UserDTO findUserByID(Long id) throws UserNotFoundException {
+    public UserDTO findUserByID(Long id) throws NotFoundException {
         User user = verifyIfExists(id);
 
         return userMapper.toDTO(user);
     }
 
     //Delete user by id
-    public void deleteUserBYID(Long id) throws UserNotFoundException {
+    public void deleteUserBYID(Long id) throws NotFoundException {
        verifyIfExists(id);
 
         userRepository.deleteById(id);
     }
 
     //Update user by id
-    public MessageResponseDTO updateUserByID(Long id, UserDTO userDTO) throws UserNotFoundException {
+    public MessageResponseDTO updateUserByID(Long id, UserDTO userDTO) throws NotFoundException {
         verifyIfExists(id);
 
         User userToUpdate = userMapper.toModel(userDTO);
@@ -67,9 +67,9 @@ public class UserService {
         return createMessageResponse("User updated with ID ", userUpdated.getId());
     }
 
-    private User verifyIfExists(Long id) throws UserNotFoundException {
+    private User verifyIfExists(Long id) throws NotFoundException {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new NotFoundException("User", id));
     }
 
     private MessageResponseDTO createMessageResponse(String s, Long id){
