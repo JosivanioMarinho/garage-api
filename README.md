@@ -24,11 +24,13 @@
    * Cor
    
    Após informar essas informações corretamente, Juninho terá uma conta
-   acessível em nosso sistema.
+   acessível em nosso sistema. Caso ele envie dados que não condizem com
+   as especificações como por exemplo e-mail ou tentar enviar algum campo
+   vazio, irá receber uma mensagem de erro.
 
 2 - Listar todos os usuários
 
-   O usuário pode ter uma listagem de todos os usuários cadastrados.
+   O Juninho pode ter uma listagem de todos os usuários cadastrados.
    
 3 - Busca de um usuário pelo ID
 
