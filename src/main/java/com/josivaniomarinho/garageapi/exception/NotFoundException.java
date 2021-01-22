@@ -9,4 +9,8 @@ public class NotFoundException extends Exception{
     public NotFoundException(String entity, Long id) {
         super(entity + " not found with ID " + id);
     }
+
+    public NotFoundException(String message) {
+        super(message);
+    }
 }

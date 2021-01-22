@@ -1,5 +1,6 @@
 package com.josivaniomarinho.garageapi.config;
 
+import com.josivaniomarinho.garageapi.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
