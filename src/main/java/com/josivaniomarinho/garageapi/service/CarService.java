@@ -3,6 +3,7 @@ package com.josivaniomarinho.garageapi.service;
 import com.josivaniomarinho.garageapi.dto.request.CarDTO;
 import com.josivaniomarinho.garageapi.dto.response.MessageResponseDTO;
 import com.josivaniomarinho.garageapi.entity.Car;
+import com.josivaniomarinho.garageapi.exception.CarExistsLicensePlateException;
 import com.josivaniomarinho.garageapi.exception.NotFoundException;
 import com.josivaniomarinho.garageapi.mapper.CarMapper;
 import com.josivaniomarinho.garageapi.repository.CarRepository;
@@ -25,6 +26,8 @@ public class CarService {
     }
 
     public MessageResponseDTO createCar(CarDTO carDTO){
+        verifyIfLicensePlateExists(carDTO.getLicensePlate());
+
         Car carToSave = carMapper.toModel(carDTO);
 
         Car savedCar = carRepository.save(carToSave);
@@ -46,6 +49,7 @@ public class CarService {
         return carMapper.toDTO(car);
     }
 
+    //Update car by id
     public MessageResponseDTO updateCarById(Long id, CarDTO carDTO) throws NotFoundException {
         verifyIfExists(id);
 
@@ -55,6 +59,7 @@ public class CarService {
         return createMessageResponse("Car updated with ID ", updatedCar.getId());
     }
 
+    //Delete car by id
     public void deleteById(Long id) throws NotFoundException {
         verifyIfExists(id);
 
@@ -71,6 +76,15 @@ public class CarService {
     private Car verifyIfExists(Long id) throws NotFoundException {
         return carRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Car", id));
+    }
+
+    private void verifyIfLicensePlateExists(String licensePlate){
+        List<Car> carsList = carRepository.findAll();
+        for (Car car : carsList){
+            if(car.getLicensePlate().equals(licensePlate)){
+                throw new CarExistsLicensePlateException("License plate already exists");
+            }
+        }
     }
 
 }
