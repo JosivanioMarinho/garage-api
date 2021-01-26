@@ -60,3 +60,16 @@
 
    Após realizar seu login, Juninho pode ter acesso as suas informações cadastradas
    mo sistema, exceto, ID e senha por questões de segurança.
+   
+8 - Cadastrar carro para usuário logado
+
+   Após realizar o seu login, nosso usuário Juninho pode adicionar mais carros na sua
+   conta. Digamos que ele tenha comprado mais dois carros e, queira cadastralos no sis-
+   tema, ele poderá.
+   
+9 - Listar todos os carros do usuário logado
+
+   Nosso usuário Juninho é uma pessoa muito rica, por isso ele tem muitos carros em nosso
+   sistema. Digamos que ele queira consultar todos os seus carros, para isso ele precisa 
+   fazer login, e acessando a função "listar todos", terá acesso a sua lista de carros 
+   cadastrados.
