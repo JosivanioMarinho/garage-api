@@ -45,12 +45,14 @@ public class CarService {
         userLoged.setCars(carsToSave);
 
         userRepository.save(userLoged);
-        return createMessageResponse("Car created with ID ", userLoged.getId());
+        return createMessageResponse("Car created for user witch ID ", userLoged.getId());
     }
 
     //List all cars
     public List<CarDTO> listAll(){
-        List<Car> carsList = carRepository.findAll();
+        User userLoged = userRepository.findByLogin(this.userLogin);
+
+        List<Car> carsList = userLoged.getCars();
         return carsList.stream()
                 .map(carMapper::toDTO)
                 .collect(Collectors.toList());
@@ -60,7 +62,15 @@ public class CarService {
     public CarDTO findCarById(Long id) throws NotFoundException {
         Car car = verifyIfExists(id);
 
-        return carMapper.toDTO(car);
+        User userLoged = userRepository.findByLogin(this.userLogin);
+        List<Car> carsList = userLoged.getCars();
+
+        for (Car car1 : carsList){
+            if (car1.getId().equals(car.getId())){
+                return carMapper.toDTO(car);
+            }
+        }
+        return null;
     }
 
     //Update car by id
@@ -93,7 +103,7 @@ public class CarService {
 
     private Car verifyIfExists(Long id) throws NotFoundException {
         return carRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Car", id));
+                .orElseThrow(() -> new NotFoundException("Car ", id));
     }
 
     private void verifyIfLicensePlateExists(String licensePlate){
