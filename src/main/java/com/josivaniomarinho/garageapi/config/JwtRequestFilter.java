@@ -1,6 +1,7 @@
 package com.josivaniomarinho.garageapi.config;
 
 import com.josivaniomarinho.garageapi.controller.UserController;
+import com.josivaniomarinho.garageapi.service.CarService;
 import com.josivaniomarinho.garageapi.service.JwtUserDetailService;
 import com.josivaniomarinho.garageapi.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -30,6 +31,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CarService carService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String requestTokenHeader = request.getHeader("Authorization");
@@ -45,6 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 //Sends the login os the logged user to the UserService
                 userService.setUserLogin(login);
+                carService.setUserLogin(login);
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {

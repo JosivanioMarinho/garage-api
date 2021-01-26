@@ -3,13 +3,16 @@ package com.josivaniomarinho.garageapi.service;
 import com.josivaniomarinho.garageapi.dto.request.CarDTO;
 import com.josivaniomarinho.garageapi.dto.response.MessageResponseDTO;
 import com.josivaniomarinho.garageapi.entity.Car;
+import com.josivaniomarinho.garageapi.entity.User;
 import com.josivaniomarinho.garageapi.exception.CarExistsLicensePlateException;
 import com.josivaniomarinho.garageapi.exception.NotFoundException;
 import com.josivaniomarinho.garageapi.mapper.CarMapper;
 import com.josivaniomarinho.garageapi.repository.CarRepository;
+import com.josivaniomarinho.garageapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,18 +23,29 @@ public class CarService {
 
     private final CarMapper carMapper = CarMapper.INSTANCE;
 
+    private String userLogin;
+
+    private UserRepository userRepository;
+
     @Autowired
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, UserRepository userRepository) {
         this.carRepository = carRepository;
+        this.userRepository = userRepository;
     }
 
     public MessageResponseDTO createCar(CarDTO carDTO){
         verifyIfLicensePlateExists(carDTO.getLicensePlate());
 
-        Car carToSave = carMapper.toModel(carDTO);
+        Car car = carMapper.toModel(carDTO);
 
-        Car savedCar = carRepository.save(carToSave);
-        return createMessageResponse("Car created with ID ", savedCar.getId());
+        User userLoged = userRepository.findByLogin(this.userLogin);
+
+        List<Car> carsToSave = userLoged.getCars();
+        carsToSave.add(car);
+        userLoged.setCars(carsToSave);
+
+        userRepository.save(userLoged);
+        return createMessageResponse("Car created with ID ", userLoged.getId());
     }
 
     //List all cars
@@ -64,6 +78,10 @@ public class CarService {
         verifyIfExists(id);
 
         carRepository.deleteById(id);
+    }
+
+    public void setUserLogin(String userLogin){
+        this.userLogin = userLogin;
     }
 
     private MessageResponseDTO createMessageResponse(String s, Long id){
