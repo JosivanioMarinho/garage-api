@@ -42,9 +42,21 @@
    No sistema, Juninho pode deletar um usuário informando o ID de quem 
    ele quer excluir.
  
-5 - Atualizar um usuário ID
+5 - Atualizar um usuário pelo ID
 
    Digamos que Juninho durante a criação de sua conta no sistema, tenha digitado 
    alguma informação errada sem perseber, é bem provavel que ele queira consertar
    o erro. Para isso ele pode atualizar os dados com de acordo com seu ID.
+   
+6 - Autenticação de usuário
+   
+   Em nosso sistema existem algumas rotas -endereços-  que necessitam de autenticação
+   para realizar algumas funções. Tendo isso em mente, para que o Juninho consiga 
+   excluir um de seus carros ou buscar a lista de todos os seus carros, ele precisa 
+   fazer um login, usando seu login e senha informados no cadastro que deve ser 
+   feito de antemão.
 
+7 - Minhas informações
+
+   Após realizar seu login, Juninho pode ter acesso as suas informações cadastradas
+   mo sistema, exceto, ID e senha por questões de segurança.
