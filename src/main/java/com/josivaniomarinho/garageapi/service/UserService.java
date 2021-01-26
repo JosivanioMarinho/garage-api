@@ -1,5 +1,6 @@
 package com.josivaniomarinho.garageapi.service;
 
+import com.josivaniomarinho.garageapi.config.JwtTokenUtil;
 import com.josivaniomarinho.garageapi.dto.request.UserDTO;
 import com.josivaniomarinho.garageapi.dto.response.MessageResponseDTO;
 import com.josivaniomarinho.garageapi.entity.User;
@@ -8,7 +9,10 @@ import com.josivaniomarinho.garageapi.exception.NotFoundException;
 import com.josivaniomarinho.garageapi.mapper.UserMapper;
 import com.josivaniomarinho.garageapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +24,10 @@ public class UserService {
 
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
+    private JwtTokenUtil jwtTokenUtil;
+
+    private String userLogin;
+
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -29,7 +37,10 @@ public class UserService {
     public MessageResponseDTO createUser(UserDTO userDTO){
         verifyIfEmailAndLoginExists(userDTO.getEmail(), userDTO.getLogin());
 
+        String passwordEconded = encodePassword().encode(userDTO.getPassword());
+
         User userToSave = userMapper.toModel(userDTO);
+        userToSave.setPassword(passwordEconded);
 
         User savedUser = userRepository.save(userToSave);
         return createMessageResponse("User created with ID ", savedUser.getId());
@@ -67,6 +78,27 @@ public class UserService {
         return createMessageResponse("User updated with ID ", userUpdated.getId());
     }
 
+    public void setUserLogin(String userLogin){
+        this.userLogin = userLogin;
+    }
+
+    //Return data's user
+    public UserDTO userInformations(){
+        User userLoged = userRepository.findByLogin(this.userLogin);
+
+        UserDTO userDTO = userMapper.toDTO(userLoged);
+        return UserDTO
+                .builder()
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .email(userDTO.getEmail())
+                .birthday(userDTO.getBirthday())
+                .login(userDTO.getLogin())
+                .phone(userDTO.getPhone())
+                .cars(userDTO.getCars())
+                .build();
+    }
+
     private User verifyIfExists(Long id) throws NotFoundException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User", id));
@@ -90,4 +122,7 @@ public class UserService {
         }
     }
 
+    private PasswordEncoder encodePassword(){
+        return new BCryptPasswordEncoder();
+    }
 }

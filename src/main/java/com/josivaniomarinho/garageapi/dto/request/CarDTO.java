@@ -16,15 +16,15 @@ public class CarDTO {
 
     private Long id;
 
-    @NotNull(message = "{year.not.empty}")
+    @NotNull(message = "{missing.fields}")
     private Integer year;
 
-    @NotEmpty(message = "{licensePlate.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     private String licensePlate;
 
-    @NotEmpty(message = "{model.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     private String model;
 
-    @NotEmpty(message = "{color.not.empty}")
+    @NotEmpty(message = "{missing.fields}")
     private String color;
 }

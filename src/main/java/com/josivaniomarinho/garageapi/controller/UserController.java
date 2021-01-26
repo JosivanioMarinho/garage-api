@@ -16,9 +16,9 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -48,5 +48,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserByID(@PathVariable Long id) throws NotFoundException {
         userService.deleteUserBYID(id);
+    }
+
+    @GetMapping("/me")
+    public UserDTO userInformations(){
+        return userService.userInformations();
     }
 }
