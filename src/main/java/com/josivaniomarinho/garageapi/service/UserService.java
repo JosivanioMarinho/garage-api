@@ -1,19 +1,23 @@
 package com.josivaniomarinho.garageapi.service;
 
 import com.josivaniomarinho.garageapi.config.JwtTokenUtil;
+import com.josivaniomarinho.garageapi.dto.request.CarDTO;
 import com.josivaniomarinho.garageapi.dto.request.UserDTO;
 import com.josivaniomarinho.garageapi.dto.response.MessageResponseDTO;
+import com.josivaniomarinho.garageapi.entity.Car;
 import com.josivaniomarinho.garageapi.entity.User;
 import com.josivaniomarinho.garageapi.exception.UserExistsEmailAndLoginException;
 import com.josivaniomarinho.garageapi.exception.NotFoundException;
+import com.josivaniomarinho.garageapi.mapper.CarMapper;
 import com.josivaniomarinho.garageapi.mapper.UserMapper;
+import com.josivaniomarinho.garageapi.repository.CarRepository;
 import com.josivaniomarinho.garageapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,15 +26,20 @@ public class UserService {
 
     private UserRepository userRepository;
 
+    private CarRepository carRepository;
+
     private final UserMapper userMapper = UserMapper.INSTANCE;
+
+    private final CarMapper carMapper = CarMapper.INSTANCE;
 
     private JwtTokenUtil jwtTokenUtil;
 
     private String userLogin;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CarRepository carRepository) {
         this.userRepository = userRepository;
+        this.carRepository = carRepository;
     }
 
     //Create user
@@ -42,7 +51,15 @@ public class UserService {
         User userToSave = userMapper.toModel(userDTO);
         userToSave.setPassword(passwordEconded);
 
+        Car carToSave = new Car();
+        for (Car car : userToSave.getCars()){
+            car.setUser(userToSave);
+            carToSave = car;
+        }
+        //Save an user and car to user
         User savedUser = userRepository.save(userToSave);
+        carRepository.save(carToSave);
+
         return createMessageResponse("User created with ID ", savedUser.getId());
     }
 

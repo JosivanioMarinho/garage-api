@@ -39,10 +39,20 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String password;
-
     @Column(nullable = false)
     private String phone;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+
+    /*
+    @OneToMany(mappedBy = "USER")
+    @JoinTable(name = "USER_CAR",
+            joinColumns = {
+            @JoinColumn(name = "USER_ID", referencedColumnName="id") },
+        inverseJoinColumns = {
+            @JoinColumn(name = "CAR_ID", referencedColumnName="id")}
+    )
+    */
+    //@OneToMany(mappedBy = "USER",fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Car> cars;
 }

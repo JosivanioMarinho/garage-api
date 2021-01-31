@@ -30,4 +30,8 @@ public class Car implements Serializable {
 
     @Column(nullable = false)
     private String color;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

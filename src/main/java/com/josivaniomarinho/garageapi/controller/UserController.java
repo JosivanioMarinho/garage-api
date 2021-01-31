@@ -52,6 +52,7 @@ public class UserController {
 
     @GetMapping("/me")
     public UserDTO userInformations(){
+
         return userService.userInformations();
     }
 }

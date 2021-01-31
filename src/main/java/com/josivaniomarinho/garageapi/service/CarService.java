@@ -39,12 +39,17 @@ public class CarService {
         Car car = carMapper.toModel(carDTO);
 
         User userLoged = userRepository.findByLogin(this.userLogin);
+            car.setUser(userLoged);
 
+            carRepository.save(car);
+        /*
         List<Car> carsToSave = userLoged.getCars();
         carsToSave.add(car);
         userLoged.setCars(carsToSave);
 
         userRepository.save(userLoged);
+        */
+
         return createMessageResponse("Car created for user witch ID ", userLoged.getId());
     }
 
@@ -77,17 +82,38 @@ public class CarService {
     public MessageResponseDTO updateCarById(Long id, CarDTO carDTO) throws NotFoundException {
         verifyIfExists(id);
 
-        Car carToUpdate = carMapper.toModel(carDTO);
+        User userLogged = userRepository.findByLogin(this.userLogin);
+        List<Car> cars = userLogged.getCars();
 
-        Car updatedCar = carRepository.save(carToUpdate);
-        return createMessageResponse("Car updated with ID ", updatedCar.getId());
+        //Checks if the legged in user has the car with the indicated ID
+        for (Car car1 : cars){
+            if (car1.getId().equals(id)){
+                Car carToUpdate = carMapper.toModel(carDTO);
+                carToUpdate.setUser(userLogged);
+
+                Car updatedCar = carRepository.save(carToUpdate);
+                return createMessageResponse("Car updated with ID ", updatedCar.getId());
+            }
+        }
+        throw new NotFoundException("This user does not have a car with the ID "+ id);
     }
 
     //Delete car by id
     public void deleteById(Long id) throws NotFoundException {
-        verifyIfExists(id);
+        Car car = verifyIfExists(id);
 
-        carRepository.deleteById(id);
+        User userLoged = userRepository.findByLogin(this.userLogin);
+        List<Car> cars = userLoged.getCars();
+
+        for (Car car1 : cars){
+            if (car1.getId().equals(car.getId())){
+
+                System.out.println("Quantidade de carros antes de excluir: "+cars.size());
+                carRepository.deleteById(car.getId());
+                cars = carRepository.findAll();
+                System.out.println("Quantidade de carros: "+cars.size());
+            }
+        }
     }
 
     public void setUserLogin(String userLogin){
