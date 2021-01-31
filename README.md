@@ -73,3 +73,15 @@
    sistema. Digamos que ele queira consultar todos os seus carros, para isso ele precisa 
    fazer login, e acessando a função "listar todos", terá acesso a sua lista de carros 
    cadastrados.
+
+10 - Buscar carro do usuário logado pelo ID
+
+   Além de buscar todos os carros de uma só vez, o Juninho também pode buscar um de seus
+   carros informando o id do mesmo.
+   
+11 - Remover carro pelo ID
+
+   Suponhamos que nosso usuário Juninho tenha vendido um de seus belos carros, ele vai 
+   querer remover esse carro de sua lista, pois não pertence mais a ele. Para isso bastar 
+   ele excluir o carro informando o id correspondente.
+   
