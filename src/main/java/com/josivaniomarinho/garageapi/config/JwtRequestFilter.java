@@ -1,6 +1,5 @@
 package com.josivaniomarinho.garageapi.config;
 
-import com.josivaniomarinho.garageapi.controller.UserController;
 import com.josivaniomarinho.garageapi.service.CarService;
 import com.josivaniomarinho.garageapi.service.JwtUserDetailService;
 import com.josivaniomarinho.garageapi.service.UserService;
@@ -60,7 +59,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
              logger.warn("JWT Token does not begin with Bearer String");
         }
 
-        //Tendo o token, válide
+        //Having the token, valid
         if (login != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.jwtUserDetailService.loadUserByUsername(login);
 

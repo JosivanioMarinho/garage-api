@@ -34,7 +34,7 @@ public class JwtAuthenticationController {
         authenticate(credentialsDTO.getLogin(), credentialsDTO.getPassword());
 
         final UserDetails userDetails = userDetailService
-                                .loadUserByUsername(credentialsDTO.getLogin());
+                .loadUserByUsername(credentialsDTO.getLogin());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(token);

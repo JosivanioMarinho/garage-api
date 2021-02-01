@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //Configure security
+
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -52,12 +53,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity)
             throws Exception {
         httpSecurity.csrf().disable()
-            // Não cheque essas requisições
+            //Do not check these requests
                 .authorizeRequests()
                 .antMatchers("/api/signin","/api/users","/api/users/**", "/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/signin").permitAll()
-            // Qualquer outra requisição deve ser checada
-                 .anyRequest()
+            //Any other request must be checked
+                .anyRequest()
                 .authenticated()
                 .and()
                 .exceptionHandling()

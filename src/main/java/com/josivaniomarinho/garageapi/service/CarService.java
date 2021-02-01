@@ -21,11 +21,11 @@ public class CarService {
 
     private CarRepository carRepository;
 
+    private UserRepository userRepository;
+
     private final CarMapper carMapper = CarMapper.INSTANCE;
 
     private String userLogin;
-
-    private UserRepository userRepository;
 
     @Autowired
     public CarService(CarRepository carRepository, UserRepository userRepository) {
@@ -42,13 +42,6 @@ public class CarService {
             car.setUser(userLoged);
 
             carRepository.save(car);
-        /*
-        List<Car> carsToSave = userLoged.getCars();
-        carsToSave.add(car);
-        userLoged.setCars(carsToSave);
-
-        userRepository.save(userLoged);
-        */
 
         return createMessageResponse("Car created for user witch ID ", userLoged.getId());
     }
@@ -107,11 +100,7 @@ public class CarService {
 
         for (Car car1 : cars){
             if (car1.getId().equals(car.getId())){
-
-                System.out.println("Quantidade de carros antes de excluir: "+cars.size());
                 carRepository.deleteById(car.getId());
-                cars = carRepository.findAll();
-                System.out.println("Quantidade de carros: "+cars.size());
             }
         }
     }

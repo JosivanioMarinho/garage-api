@@ -30,8 +30,6 @@ public class UserService {
 
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
-    private final CarMapper carMapper = CarMapper.INSTANCE;
-
     private JwtTokenUtil jwtTokenUtil;
 
     private String userLogin;
@@ -46,10 +44,10 @@ public class UserService {
     public MessageResponseDTO createUser(UserDTO userDTO){
         verifyIfEmailAndLoginExists(userDTO.getEmail(), userDTO.getLogin());
 
-        String passwordEconded = encodePassword().encode(userDTO.getPassword());
+        String passwordEnconded = encodePassword().encode(userDTO.getPassword());
 
         User userToSave = userMapper.toModel(userDTO);
-        userToSave.setPassword(passwordEconded);
+        userToSave.setPassword(passwordEnconded);
 
         Car carToSave = new Car();
         for (Car car : userToSave.getCars()){
@@ -58,7 +56,7 @@ public class UserService {
         }
         //Save an user and car to user
         User savedUser = userRepository.save(userToSave);
-        carRepository.save(carToSave);
+            carRepository.save(carToSave);
 
         return createMessageResponse("User created with ID ", savedUser.getId());
     }
